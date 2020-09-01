@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block body %}
+    <h1>发表留言</h1>
     <form action="subMsg" method="POST">
-        Message: <input type="text" name="msg"><br>
-        <input type="submit" value="发表">
-      </form>
-</body>
-</html>
+        Message: <textarea rows="10" cols="30" name="msg"></textarea><br>
+        <input type="submit" value="发表"><br>
+        <input type="checkbox" name="pub">公开<br>
+        <input type="checkbox" name="pri">隐私<br>
+    </form>
+    <!-- 渲染消息 -->
+    {% if msgData%}
+    {% for author in msgData.keys() %}
+    {{ author }}:
+        {% for msg in msgData[author] %}
+        <ul>
+            <li>{{ msg }}</li>
+        </ul>
+        {% endfor %}
+    {% endfor %}
+    {% endif %}
+
+{% endblock %}
